@@ -8,7 +8,7 @@ import { Particles } from "@/components/effects/Particles";
 import { Cursor } from "@/components/effects/Cursor";
 
 export default function Home() {
-  return (
+  return ( 
     <>
       <Cursor />
       <Particles />

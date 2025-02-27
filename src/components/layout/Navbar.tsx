@@ -1,37 +1,91 @@
 "use client";
 
-import { NAV_ITEMS } from "@/lib/constants/navigation";
-import Link from "next/link";
-import { motion } from "framer-motion";
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Container } from './Container';
+import { ThemeToggle } from './ThemeToggle';
+import { Icons } from '../ui/Icons';
+import Link from 'next/link';
+
+const navItems = [
+  { href: '#about', label: 'About' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#experience', label: 'Experience' },
+  { href: '#contact', label: 'Contact' },
+];
 
 export function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-sm border-b border-secondary">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link href="/" className="text-lg font-bold">
-              Your Name
-            </Link>
-          </div>
-          <div className="hidden sm:flex items-center space-x-8">
-            {NAV_ITEMS.map((item) => (
-              <motion.div
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
+      <Container>
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link 
+            href="/" 
+            className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"
+          >
+            JG
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            {navItems.map((item) => (
+              <Link
                 key={item.href}
-                whileHover={{ y: -2 }}
-                whileTap={{ y: 0 }}
+                href={item.href}
+                className="text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
               >
-                <Link
-                  href={item.href}
-                  className="text-foreground/80 hover:text-foreground transition-colors"
-                >
-                  {item.label}
-                </Link>
-              </motion.div>
+                {item.label}
+              </Link>
             ))}
           </div>
+
+          {/* Theme Toggle and Mobile Menu Button */}
+          <div className="flex items-center gap-4">
+            <ThemeToggle />
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 md:hidden text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? (
+                <Icons.close className="w-6 h-6" />
+              ) : (
+                <Icons.menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
         </div>
-      </div>
+      </Container>
+
+      {/* Mobile Navigation */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden border-t border-gray-200 dark:border-gray-800"
+          >
+            <Container>
+              <div className="py-4 space-y-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setIsOpen(false)}
+                    className="block py-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white transition-colors"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </Container>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }

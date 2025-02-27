@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { ThemeProvider } from "@/lib/providers/theme-provider";
+import { Cursor } from "@/components/effects/Cursor";
+import { ParticleBackground } from "@/components/effects/ParticleBackground";
+import { Navbar } from "@/components/layout/Navbar";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -20,11 +23,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geist.variable} antialiased`}>
-        <div className="relative">
-          <ThemeToggle />
-          {children}
-        </div>
+      <body className={`${geist.variable} font-sans antialiased min-h-screen`}>
+        <ThemeProvider>
+          <div className="relative flex flex-col min-h-screen">
+            <ParticleBackground />
+            <Navbar />
+            <main className="flex-grow pt-16">
+              {children}
+            </main>
+            <Cursor />
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
