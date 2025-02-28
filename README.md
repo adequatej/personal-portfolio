@@ -1,3 +1,5 @@
+# Personal Website
+
 ## Tech Stack
 - Next.js
 - React
