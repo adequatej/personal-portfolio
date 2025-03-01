@@ -25,7 +25,7 @@ export function CursorSelector() {
       {effects.map((item) => (
         <Button
           key={item.id}
-          variant={effect === item.id ? 'primary' : 'ghost'}
+          variant={effect === item.id ? 'default' : 'ghost'}
           size="sm"
           onClick={() => setEffect(item.id as any)}
           className="gap-1.5"

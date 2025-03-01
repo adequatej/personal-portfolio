@@ -2,84 +2,157 @@
 
 import { Container } from '@/components/layout/Container';
 import { Button } from '@/components/ui/Button';
+import { Icons } from '@/components/ui/Icons';
 import { motion } from 'framer-motion';
+import { TypeAnimation } from 'react-type-animation';
+import Link from 'next/link';
+
+const socialLinks = [
+  {
+    name: 'GitHub',
+    url: 'https://github.com/yourusername',
+    icon: Icons.github
+  },
+  {
+    name: 'LinkedIn',
+    url: 'https://linkedin.com/in/yourusername',
+    icon: Icons.linkedin
+  },
+  {
+    name: 'Twitter',
+    url: 'https://twitter.com/yourusername',
+    icon: Icons.twitter
+  }
+];
 
 export function Hero() {
   return (
-    <Container>
-      <div className="relative min-h-[calc(100vh-4rem)] flex flex-col justify-center">
-        <div className="grid gap-8 lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Text content */}
+    <section className="min-h-[calc(100vh-4rem)] flex items-center relative overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" />
+
+      <Container className="relative">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Content */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="space-y-6 text-center lg:text-left"
+            className="space-y-8"
           >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
-              <span className="block">Hi, I'm</span>
-              <span className="block dark:text-purple-500 text-orange-500 transition-colors duration-300">
+            {/* Greeting */}
+            <div className="space-y-2">
+              <motion.p
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-lg md:text-xl text-primary font-medium"
+              >
+                Hi there 👋, I'm
+              </motion.p>
+              <motion.h1
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-4xl md:text-5xl lg:text-6xl font-bold"
+              >
                 Jed Geoghegan
-              </span>
-            </h1>
-            
-            <p className="text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-300">
-              Full-Stack Developer specializing in modern web applications
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button 
-                size="lg"
-                className="dark:bg-purple-500 dark:hover:bg-purple-600 bg-orange-500 hover:bg-orange-600 transition-colors duration-300"
+              </motion.h1>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="text-2xl md:text-3xl lg:text-4xl text-gray-600 dark:text-gray-300"
               >
-                View My Work
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="dark:border-purple-500 dark:text-purple-500 dark:hover:bg-purple-950 
-                         border-orange-500 text-orange-500 hover:bg-orange-50
-                         transition-colors duration-300"
-              >
-                Contact Me
-              </Button>
+                I'm a{' '}
+                <TypeAnimation
+                  sequence={[
+                    'Frontend Developer',
+                    2000,
+                    'Full Stack Developer',
+                    2000,
+                    'Software Engineer',
+                    2000,
+                  ]}
+                  wrapper="span"
+                  speed={50}
+                  repeat={Infinity}
+                  className="text-primary font-medium"
+                />
+              </motion.div>
             </div>
+
+            {/* Description */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-lg"
+            >
+              I create beautiful, responsive, and user-friendly web applications
+              using modern technologies and best practices.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="flex flex-wrap gap-4"
+            >
+              <Button size="lg" href="#contact">
+                Get in Touch
+              </Button>
+              <Button size="lg" variant="outline" href="#projects">
+                View Projects
+              </Button>
+            </motion.div>
+
+            {/* Social Links */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.7 }}
+              className="flex gap-4"
+            >
+              {socialLinks.map((link, index) => (
+                <motion.a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 text-gray-600 hover:text-gray-900 dark:text-gray-300 
+                           dark:hover:text-white transition-colors"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3, delay: 0.8 + index * 0.1 }}
+                >
+                  <link.icon className="w-6 h-6" />
+                </motion.a>
+              ))}
+            </motion.div>
           </motion.div>
 
-          {/* Image or illustration */}
+          {/* Hero Image */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="relative aspect-square max-w-md mx-auto lg:ml-auto"
+            className="relative aspect-square max-w-md mx-auto"
           >
-            <div className="w-full h-full rounded-full dark:bg-gradient-to-tr dark:from-purple-500 dark:to-blue-500 
-                          bg-gradient-to-tr from-orange-500 to-yellow-500 
-                          opacity-20 animate-pulse transition-colors duration-300" />
+            <div className="relative z-10">
+              <img
+                src="/images/hero.png"
+                alt="Hero"
+                className="w-full h-full object-cover rounded-2xl"
+              />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-primary/20 to-transparent" />
+            </div>
           </motion.div>
         </div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.5,
-            delay: 0.5,
-            y: {
-              duration: 1.5,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "easeInOut"
-            }
-          }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
-        >
-          <div className="w-6 h-10 rounded-full border-2 border-gray-400 dark:border-gray-600 flex justify-center p-2">
-            <div className="w-1 h-2 rounded-full bg-gray-400 dark:bg-gray-600" />
-          </div>
-        </motion.div>
-      </div>
-    </Container>
+      </Container>
+    </section>
   );
 }

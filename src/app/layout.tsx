@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/providers/theme-provider";
-import { Cursor } from "@/components/effects/Cursor";
-import { ParticleBackground } from "@/components/effects/ParticleBackground";
+import { BackgroundSelector } from "@/components/effects/BackgroundSelector";
 import { Navbar } from "@/components/layout/Navbar";
 
 const geist = Geist({
@@ -26,12 +25,11 @@ export default function RootLayout({
       <body className={`${geist.variable} font-sans antialiased min-h-screen`}>
         <ThemeProvider>
           <div className="relative flex flex-col min-h-screen">
-            <ParticleBackground />
+            <BackgroundSelector />
             <Navbar />
             <main className="flex-grow pt-16">
               {children}
             </main>
-            <Cursor />
           </div>
         </ThemeProvider>
       </body>
