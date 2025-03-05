@@ -15,31 +15,31 @@ const backgrounds = [
     type: 'particles',
     label: 'Static Field',
     description: 'A static field of particles with subtle connections',
-    Icon: Icons.sparkles
+    icon: Icons.sparkles
   },
   {
     type: 'blackhole',
     label: 'Black Hole',
     description: 'A magnetic field that attracts and disperses particles',
-    Icon: Icons.atom
+    icon: Icons.atom
   },
   {
     type: 'energyfield',
     label: 'Energy Field',
     description: 'Dynamic energy lines with glowing effects',
-    Icon: Icons.zap
+    icon: Icons.zap
   },
   {
     type: 'noiseflow',
     label: 'Noise Flow',
     description: 'Flowing particles guided by noise patterns',
-    Icon: Icons.waves
+    icon: Icons.waves
   },
   {
     type: 'matrix',
     label: 'Matrix',
     description: 'Classic digital rain effect',
-    Icon: Icons.terminal
+    icon: Icons.terminal
   }
 ] as const;
 
@@ -79,7 +79,7 @@ export function BackgroundSelector() {
             className="flex items-center gap-2 bg-background/80 backdrop-blur-sm hover:bg-background/90"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {selectedBg?.Icon({ className: "w-4 h-4" })}
+            {selectedBg && <selectedBg.icon className="w-4 h-4" />}
             <span className="text-sm">Background</span>
             {isOpen ? 
               <Icons.chevronUp className="w-4 h-4" /> : 
@@ -101,7 +101,7 @@ export function BackgroundSelector() {
                     }}
                   >
                     <div className="flex items-center gap-2">
-                      {bg.Icon({ className: "w-4 h-4" })}
+                      <bg.icon className="w-4 h-4" />
                       <span className="font-medium">{bg.label}</span>
                     </div>
                     <p className="text-xs text-muted-foreground ml-6">{bg.description}</p>
