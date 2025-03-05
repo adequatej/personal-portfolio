@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "visitorCount": {
+      ".read": true,
+      ".write": true
+    },
+    "contactMessages": {
+      ".read": false,
+      ".write": true
+    }
+  }
+} 
