@@ -6,11 +6,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 const COLORS = {
   dark: {
     primary: '139, 92, 246',   // Purple
-    secondary: '59, 130, 246'  // Blue
+    secondary: '99, 102, 241'  // Indigo
   },
   light: {
     primary: '249, 115, 22',   // Orange
-    secondary: '234, 179, 8'   // Yellow
+    secondary: '239, 68, 68'   // Red
   }
 } as const;
 
