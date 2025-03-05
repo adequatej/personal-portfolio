@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/lib/providers/theme-provider";
 import { BackgroundSelector } from "@/components/effects/BackgroundSelector";
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -22,14 +23,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geist.variable} font-sans antialiased min-h-screen`}>
+      <body className={`${geist.variable} font-sans antialiased min-h-screen overflow-x-hidden`}>
         <ThemeProvider>
-          <div className="relative flex flex-col min-h-screen">
+          <div className="relative flex flex-col min-h-screen w-full">
             <BackgroundSelector />
             <Navbar />
-            <main className="flex-grow pt-16">
+            <main className="flex-grow pt-16 w-full">
               {children}
             </main>
+            <Footer />
           </div>
         </ThemeProvider>
       </body>
