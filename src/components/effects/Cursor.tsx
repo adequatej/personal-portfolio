@@ -8,8 +8,8 @@ const SPRING_CONFIG = { damping: 15, stiffness: 200, mass: 0.1 };
 const CURSOR_SIZE = 16;
 
 const GRADIENTS = {
-  dark: 'linear-gradient(to right, rgb(139, 92, 246), rgb(59, 130, 246))',
-  light: 'linear-gradient(to right, rgb(249, 115, 22), rgb(234, 179, 8))'
+  dark: 'linear-gradient(to right, rgb(139, 92, 246), rgb(99, 102, 241))',
+  light: 'linear-gradient(to right, rgb(249, 115, 22), rgb(239, 68, 68))'
 } as const;
 
 export function Cursor() {
