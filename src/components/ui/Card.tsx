@@ -8,11 +8,13 @@ interface CardProps {
   children: ReactNode;
   className?: string;
   animate?: boolean;
+  onClick?: () => void;
 }
 
-export function Card({ children, className, animate = true }: CardProps) {
+export function Card({ children, className, animate = true, onClick }: CardProps) {
   const content = (
     <div
+      onClick={onClick}
       className={twMerge(
         'rounded-lg bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700',
         className
