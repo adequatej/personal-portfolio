@@ -22,6 +22,7 @@ export function Container({ children, className, size = 'xl' }: ContainerProps) 
         size === 'full' && 'max-w-full',
         className
       )}
+      style={{ boxSizing: 'border-box' }}
     >
       {children}
     </div>

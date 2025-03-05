@@ -9,8 +9,8 @@ import Link from 'next/link';
 
 const navItems = [
   { href: '#about', label: 'About' },
+  { href: '#skills', label: 'Skills' },
   { href: '#projects', label: 'Projects' },
-  { href: '#experience', label: 'Experience' },
   { href: '#contact', label: 'Contact' },
 ];
 
@@ -24,7 +24,7 @@ export function Navbar() {
           {/* Logo */}
           <Link 
             href="/" 
-            className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent"
+            className="text-xl font-bold bg-gradient-to-r from-orange-400 to-red-500 dark:from-purple-500 dark:to-indigo-600 bg-clip-text text-transparent"
           >
             JG
           </Link>
