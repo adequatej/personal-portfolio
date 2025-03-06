@@ -2,13 +2,25 @@
 
 import { useTheme } from 'next-themes';
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  
+  // Only render component after it's mounted on the client
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
+
+  // Prevent hydration mismatch by not rendering until client-side
+  if (!mounted) {
+    return <div className="w-5 h-5 p-2"></div>; // Placeholder with same size
+  }
 
   return (
     <motion.button
