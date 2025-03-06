@@ -68,6 +68,13 @@ const config: Config = {
           '100%': { transform: 'scale(2)', opacity: '0' },
         },
       },
+      boxShadow: {
+        'glow-light': '0 0 20px rgba(251,146,60,0.3)',
+        'glow-dark': '0 0 20px rgba(168,85,247,0.3)',
+      },
+      dropShadow: {
+        'glow': '0 0 8px rgba(255, 255, 255, 0.5)',
+      },
     },
   },
   plugins: [],
