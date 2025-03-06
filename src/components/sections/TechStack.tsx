@@ -338,47 +338,6 @@ export function Skills() {
     { value: 'dev-tools', label: 'Development Tools' }
   ];
 
-  // Add tech icons mapping
-  const techIcons: Record<string, string> = {
-    'Next.js': '/icons/tech/nextjs.svg',
-    'React': '/icons/tech/react.svg',
-    'TypeScript': '/icons/tech/typescript.svg',
-    'Node.js': '/icons/tech/nodejs.svg',
-    'Python': '/icons/tech/python.svg',
-    'MongoDB': '/icons/tech/mongodb.svg',
-    'PostgreSQL': '/icons/tech/postgresql.svg',
-    'AWS': '/icons/tech/aws.svg',
-    'Docker': '/icons/tech/docker.svg',
-    'TensorFlow': '/icons/tech/tensorflow.svg',
-    'Flask': '/icons/tech/flask.svg',
-    'TailwindCSS': '/icons/tech/tailwindcss.svg',
-    'HTML': '/icons/tech/html.svg',
-    'CSS': '/icons/tech/css.svg',
-    'JavaScript': '/icons/tech/javascript.svg',
-    'Framer Motion': '/icons/tech/framer.svg',
-    'Bootstrap': '/icons/tech/bootstrap.svg',
-    'FastAPI': '/icons/tech/fastapi.svg',
-    'SQLAlchemy': '/icons/tech/sqlalchemy.svg',
-    'SQLite': '/icons/tech/sqlite.svg',
-    'SQL': '/icons/tech/sql.svg',
-    'PyTorch': '/icons/tech/pytorch.svg',
-    'Scikit-learn': '/icons/tech/scikit.svg',
-    'Pandas': '/icons/tech/pandas.svg',
-    'OpenCV': '/icons/tech/opencv.svg',
-    'Azure': '/icons/tech/azure.svg',
-    'Google Cloud Platform': '/icons/tech/gcp.svg',
-    'Linux': '/icons/tech/linux.svg',
-    'Git': '/icons/tech/git.svg',
-    'Bash': '/icons/tech/bash.svg',
-    'Prometheus': '/icons/tech/prometheus.svg',
-    'ShadCN': '/icons/tech/shadcn.svg',
-    'Streamlit': '/icons/tech/streamlit.svg',
-    'Gradio': '/icons/tech/gradio.svg',
-    'Firebase': '/icons/tech/firebase.svg',
-    'Vercel': '/icons/tech/vercel.svg',
-    'Transformers': '/icons/tech/transformers.svg'
-  };
-
   return (
     <section id="skills" className="py-16 md:py-24 bg-gray-50 dark:bg-gray-800 relative overflow-hidden">
       {/* Grid Background */}

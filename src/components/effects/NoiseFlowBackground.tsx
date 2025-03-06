@@ -39,7 +39,7 @@ class SimplexNoise {
   private perm: number[];
   private simplex: number[][];
 
-  constructor(seed: string) {
+  constructor() {
     this.grad3 = [[1,1,0],[-1,1,0],[1,-1,0],[-1,-1,0],
                   [1,0,1],[-1,0,1],[1,0,-1],[-1,0,-1],
                   [0,1,1],[0,-1,1],[0,1,-1],[0,-1,-1]];
@@ -80,7 +80,7 @@ export function NoiseFlowBackground() {
   const { resolvedTheme = 'dark' } = useTheme();
   const [mounted, setMounted] = useState(false);
   const particlesRef = useRef<Particle[]>([]);
-  const noiseRef = useRef(new SimplexNoise(Math.random().toString()));
+  const noiseRef = useRef(new SimplexNoise());
   const timeRef = useRef(0);
   const mouseRef = useRef({ x: 0, y: 0 });
   const animationFrameRef = useRef<number | undefined>(undefined);

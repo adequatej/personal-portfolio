@@ -3,8 +3,6 @@
 import { useCallback } from "react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
-import { useMotionValue, useMotionTemplate, motion } from "framer-motion";
-import { useEffect } from "react";
 
 type Point = {
   x: number;

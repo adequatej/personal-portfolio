@@ -147,7 +147,7 @@ export function ParticleBackground({ mode }: Props) {
     }));
   }, [mode]);
 
-  const updateParticles = useCallback((width: number, height: number, deltaTime: number) => {
+  const updateParticles = useCallback((width: number, height: number) => {
     const now = Date.now();
 
     if (mode === 'static') {
@@ -380,7 +380,6 @@ export function ParticleBackground({ mode }: Props) {
     if (!ctx) return;
 
     const now = performance.now();
-    const deltaTime = now - lastFrameTimeRef.current;
     lastFrameTimeRef.current = now;
 
     const width = canvas.width;
@@ -391,25 +390,19 @@ export function ParticleBackground({ mode }: Props) {
     ctx.clearRect(0, 0, width, height);
 
     // Update particle positions
-    updateParticles(width, height, deltaTime);
+    updateParticles(width, height);
 
     if (mode === 'static') {
       const config = isMobileRef.current ? STATIC_CONFIG_MOBILE : STATIC_CONFIG;
-      // Adjust base alpha for light mode
-      const baseAlpha = resolvedTheme === 'light' ? 0.15 : config.BASE_ALPHA;
       
       // Draw connections first
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       
-      particlesRef.current.forEach((particle, i) => {
+      particlesRef.current.forEach((particle) => {
         // Draw connections
         particle.connections.forEach((strength, j) => {
           const other = particlesRef.current[j];
-          const distance = Math.sqrt(
-            Math.pow(particle.x - other.x, 2) +
-            Math.pow(particle.y - other.y, 2)
-          );
           
           const midX = (particle.x + other.x) / 2;
           const midY = (particle.y + other.y) / 2;

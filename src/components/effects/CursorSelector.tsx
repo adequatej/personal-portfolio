@@ -4,13 +4,15 @@ import { Button } from '@/components/ui/Button';
 import { useCursor } from '@/lib/providers/cursor-provider';
 import { motion } from 'framer-motion';
 
-// might implement to use later, but for now, just using a simple circle
+// might implement to use later
 const effects = [
   { id: 'none', label: 'None', emoji: '🚫' },
   { id: 'stream', label: 'Stream', emoji: '💫' },
   { id: 'sparks', label: 'Sparks', emoji: '✨' },
   { id: 'ripple', label: 'Ripple', emoji: '🌊' },
 ] as const;
+
+type CursorEffect = 'stream' | 'sparks' | 'ripple' | 'none';
 
 export function CursorSelector() {
   const { effect, setEffect } = useCursor();
@@ -27,7 +29,7 @@ export function CursorSelector() {
           key={item.id}
           variant={effect === item.id ? 'default' : 'ghost'}
           size="sm"
-          onClick={() => setEffect(item.id as any)}
+          onClick={() => setEffect(item.id as CursorEffect)}
           className="gap-1.5"
         >
           <span className="text-lg">{item.emoji}</span>

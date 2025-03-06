@@ -170,7 +170,7 @@ export function Projects() {
               Featured Projects
             </h2>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              A collection of applications I've built, showcasing my technical skills and problem-solving approach.
+              A collection of applications I&apos;ve built, showcasing my technical skills and problem-solving approach.
             </p>
           </div>
 
@@ -301,8 +301,6 @@ function ProjectCard({ project, index, isExpanded, onExpand, isMobile }: Project
     x.set(0);
     y.set(0);
   };
-
-  const isActive = (!isMobile && isExpanded) || (!isMobile && cardRef.current?.matches(':hover'));
 
   return (
     <>

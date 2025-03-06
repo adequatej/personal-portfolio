@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Icons } from '@/components/ui/Icons';
 import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
-import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { incrementVisitorCount, subscribeToVisitorCount } from '@/lib/firebase';
 
@@ -60,7 +60,7 @@ export function Hero() {
                 transition={{ duration: 0.5, delay: 0.2 }}
                 className="text-lg md:text-xl font-medium text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 dark:from-purple-400 dark:to-indigo-500"
               >
-                Hi there, I'm
+                Hi, I&apos;m
               </motion.p>
               <motion.h1
                 initial={{ opacity: 0, x: -20 }}
@@ -76,7 +76,7 @@ export function Hero() {
                 transition={{ duration: 0.5, delay: 0.4 }}
                 className="text-2xl md:text-3xl lg:text-4xl text-gray-600 dark:text-gray-300"
               >
-                I'm a{' '}
+                I&apos;m a{' '}
                 <TypeAnimation
                   sequence={[
                     'Frontend Developer',
@@ -171,10 +171,12 @@ export function Hero() {
               <div className="absolute -inset-0.5 bg-gradient-to-r from-orange-400 to-red-500 dark:from-purple-400 dark:to-indigo-500 rounded-full opacity-75 group-hover:opacity-100 blur-md group-hover:blur-xl transition-all duration-300 animate-pulse-slow"></div>
               
               <div className="relative overflow-hidden rounded-full border-4 border-white dark:border-gray-800 shadow-lg bg-white dark:bg-gray-800 transition-transform duration-300 group-hover:scale-[0.98]">
-                <img
+                <Image
                   src="/IMG_6600.jpeg"
                   alt="Hero"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  width={512}
+                  height={512}
                 />
               </div>
             </div>

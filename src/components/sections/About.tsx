@@ -69,7 +69,7 @@ export function About() {
                   transition={{ delay: 0.2, duration: 0.5 }}
                   className="text-lg leading-relaxed"
                 >
-                  Hey! I'm a <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 dark:from-purple-400 dark:to-indigo-500">Full Stack Developer</span> who loves 
+                  Hey! I&apos;m a <span className="font-medium text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500 dark:from-purple-400 dark:to-indigo-500">Full Stack Developer</span> who loves 
                   building cool stuff. Currently studying with a focus on a BS in Computer Science at <span className="font-medium">WPI</span> and a MS 
                   in Computer Science as well.
                 </motion.p>
@@ -81,8 +81,8 @@ export function About() {
                   transition={{ delay: 0.4, duration: 0.5 }}
                   className="text-lg leading-relaxed"
                 >
-                  I've transitioned from cyber security and now I'm all about creating full-stack applications 
-                  that look great and work even better. I'm also interested in Software Engineering, Frontend Development, and ML/AI. When I'm not coding, you'll find me hanging out with friends, 
+                  I&apos;ve transitioned from cyber security and now I&apos;m all about creating full-stack applications 
+                  that look great and work even better. I&apos;m also interested in Software Engineering, Frontend Development, and ML/AI. When I&apos;m not coding, you&apos;ll find me hanging out with friends, 
                   playing soccer/working out, or exploring new things.
                 </motion.p>
               </div>

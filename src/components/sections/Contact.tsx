@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import { Container } from '@/components/layout/Container';
 import { Icons } from '@/components/ui/Icons';
 import { motion } from 'framer-motion';
 import { submitContactForm, ContactFormData } from '@/lib/firebase';
@@ -68,6 +67,7 @@ export function Contact() {
         });
       }
     } catch (error) {
+      console.error('Contact form submission error:', error);
       setSubmitStatus({
         success: false,
         message: 'Something went wrong. Please try again later.'
@@ -93,7 +93,7 @@ export function Contact() {
               Get in Touch
             </h2>
             <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              I'm always open to new opportunities and collaborations.
+              I&apos;m always open to new opportunities and collaborations.
             </p>
           </motion.div>
 
