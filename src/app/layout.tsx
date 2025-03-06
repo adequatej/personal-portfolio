@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/lib/providers/theme-provider";
 import { BackgroundSelector } from "@/components/effects/BackgroundSelector";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -32,6 +33,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <Analytics />
           </div>
         </ThemeProvider>
       </body>
