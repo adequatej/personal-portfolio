@@ -25,7 +25,7 @@ const projects: Project[] = [
     tags: ['Next.js', 'TypeScript', 'React', 'TailwindCSS', 'Git', 'ShadCN', 'MongoDB', 'Node.js', 'Vercel'],
     image: 'https://cdn.midjourney.com/414d8fdb-56c4-4c3d-9cd0-2ae948d26f4b/0_3.png',
     github: 'https://github.com/adequatej/huddle-chat',
-    demo: 'https://vercel.com/adequatej/huddle-chat'
+    demo: 'https://huddle-chat-pi.vercel.app/'
   },
   {
     title: 'NakamaRecs',
@@ -47,7 +47,7 @@ const projects: Project[] = [
     tags: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Firebase', 'Node.js'],
     image: 'https://cdn.midjourney.com/59255c18-1c26-4f24-a77b-66e8f0d8cebb/0_3.png',
     github: 'https://github.com/adequatej/personal-portfolio',
-    demo: 'https://adequatej.github.io/'
+    demo: 'https://jedgeoghegan.com/'
   },
   {
     title: 'Portfolio Website Iteration 1',
