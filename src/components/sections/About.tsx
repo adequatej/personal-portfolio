@@ -83,7 +83,7 @@ export function About() {
                 >
                   I&apos;ve transitioned from cyber security and now I&apos;m all about creating full-stack applications 
                   that look great and work even better. I&apos;m also interested in Software Engineering, Frontend Development, and ML/AI. When I&apos;m not coding, you&apos;ll find me hanging out with friends, 
-                  playing soccer/working out, or exploring new things.
+                  playing soccer/working out, rock climbing, or exploring new things.
                 </motion.p>
               </div>
             </motion.div>

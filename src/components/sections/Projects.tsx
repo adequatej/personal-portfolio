@@ -28,6 +28,13 @@ const projects: Project[] = [
     demo: 'https://huddle-chat-pi.vercel.app/'
   },
   {
+    title: 'Open Tech Garage',
+    description: 'A comprehensive platform for evaluating and sharing digital security tools for civil society organizations (CSOs). Each tool undergoes rigorous testing to assess its real-world impact and effectiveness for CSOs. Features a Python-automated GitHub workflow for continuous updates and a collaborative testing platform.',
+    tags: ['Git', 'Python', 'Bash'],
+    image: 'https://t.kfs.io/upload_images/187885/Profile_500x500px_original.png',
+    github: 'https://github.com/adequatej/open-source-tools',
+  },
+  {
     title: 'NakamaRecs',
     description: 'An anime recommendation system built with Python and modern ML frameworks. Utilizes TensorFlow, Scikit-learn, and FastAPI to deliver personalized movie suggestions.',
     tags: ['Python', 'TensorFlow', 'Scikit-learn', 'Pandas', 'FastAPI', 'Streamlit'],
