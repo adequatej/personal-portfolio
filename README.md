@@ -1,103 +1,106 @@
-# Personal Portfolio
+# Personal Portfolio Website ✨
 
-My modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. This portfolio showcases my projects, skills, and experience.
+A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. This portfolio showcases my projects, skills, and professional experience with beautiful animations and real-time features.
 
-![Portfolio Preview](/public/portfolio-preview.png)
+🌐 **Live Demo**: [jedgeoghegan.com](https://jedgeoghegan.com/)
 
 ## 🌟 Features
 
-- **Modern UI/UX**: Clean, responsive design with smooth animations and transitions
-- **Dark/Light Mode**: Automatic theme detection with manual toggle option
-- **Interactive Components**: Dynamic project cards, skill visualization, and contact form
-- **Particle Effects**: Custom background animations that respond to user interaction
-- **Firebase Integration**: Real-time visitor counter and contact form submission
-- **SEO Optimized**: Meta tags and structured data for better search engine visibility
-- **Responsive Design**: Optimized for all device sizes from mobile to desktop
-- **Accessibility**: WCAG compliant with keyboard navigation and screen reader support
+- **Modern UI/UX**: Clean, responsive design with smooth animations powered by Framer Motion
+- **Dark/Light Mode**: Automatic theme detection with manual toggle option using next-themes
+- **Interactive Components**: 
+  - Dynamic project cards with 3D hover effects
+  - Interactive skill visualization with hover/click interactions
+  - Real-time contact form with success feedback
+  - Animated particle background effects
+- **Firebase Integration**: 
+  - Real-time visitor counter
+  - Contact form submissions stored in Firebase Realtime Database
+- **Performance Optimized**: 
+  - Server-side rendering with Next.js 15
+  - Optimized images and lazy loading
+  - SEO-friendly with proper meta tags
+- **Responsive Design**: Fully optimized for all device sizes from mobile to desktop
+- **Analytics**: Integrated with Vercel Analytics for performance monitoring
 
-## 🚀 Technologies Used
+## 🚀 Tech Stack
 
-- **Frontend**: Next.js, React, TypeScript, Tailwind CSS, Framer Motion
-- **Backend**: Firebase Realtime Database
-- **Deployment**: Vercel
-- **Tools**: ESLint, Prettier, Git
+### Frontend
+- **Framework**: Next.js 15 with TypeScript
+- **Styling**: Tailwind CSS with custom animations
+- **UI Components**: Radix UI primitives with custom styling
+- **Animations**: Framer Motion for smooth transitions and interactions
+- **Icons**: Lucide React and Heroicons
+- **Typography**: React Type Animation for dynamic text effects
 
-## 📋 Project Structure
+### Backend & Database
+- **Database**: Firebase Realtime Database
+- **Hosting**: Vercel (with automatic deployments)
 
-```
-personal-portfolio/
-├── public/               # Static assets and images
-├── src/
-│   ├── app/              # Next.js app router pages
-│   │   ├── globals.css   # Global styles
-│   │   ├── layout.tsx    # Root layout component
-│   │   └── page.tsx      # Home page component
-│   ├── components/       # React components
-│   │   ├── effects/      # Visual effects (particles, animations)
-│   │   ├── layout/       # Layout components (navbar, footer, container)
-│   │   ├── sections/     # Page sections (hero, about, projects, etc.)
-│   │   └── ui/           # Reusable UI components (buttons, cards, etc.)
-│   ├── hooks/            # Custom React hooks
-│   ├── lib/              # Utility functions and Firebase config
-│   └── types/            # TypeScript type definitions
-├── scripts/              # Build and utility scripts
-├── .env.local            # Environment variables (not in repo)
-├── .env.example          # Example environment variables
-├── database-rules.json   # Firebase database security rules
-├── tailwind.config.ts    # Tailwind CSS configuration
-├── postcss.config.mjs    # PostCSS configuration
-├── tsconfig.json         # TypeScript configuration
-├── next.config.ts        # Next.js configuration
-├── eslint.config.mjs     # ESLint configuration
-└── package.json          # Project dependencies and scripts
-```
+### Development Tools
+- **Package Manager**: npm
+- **Linting**: ESLint with Next.js configuration
+- **Type Checking**: TypeScript 5
+- **Build Tool**: Next.js with Turbopack for faster development
 
 ## 🛠️ Setup and Installation
 
-1. **Clone the repository**
+### Prerequisites
+- Node.js 18+ 
+- npm, yarn, or pnpm
 
-```bash
-git clone https://github.com/yourusername/personal-portfolio.git
-cd personal-portfolio
-```
+### Local Development
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/adequatej/personal-portfolio.git
+   cd personal-portfolio
+   ```
 
 2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   yarn install
+   # or
+   pnpm install
+   ```
 
-```bash
-npm install
-# or
-yarn install
-# or
-pnpm install
-```
-
-3. **Set up environment variables**
-
-Create a `.env.local` file in the root directory and copy the variables from `.env.example`:
-
-```bash
-cp .env.example .env.local
-```
+3. **Set up environment variables** (Optional for Firebase features)
+   
+   Create a `.env.local` file in the root directory:
+   ```bash
+   # Firebase Realtime Database URL (optional)
+   NEXT_PUBLIC_FIREBASE_DATABASE_URL=https://your-project-id-default-rtdb.firebaseio.com
+   ```
 
 4. **Run the development server**
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   # or
+   pnpm dev
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+5. **Open your browser**
+   
+   Navigate to [http://localhost:3000](http://localhost:3000) to view the portfolio
 
-5. **Open [http://localhost:3000](http://localhost:3000) in your browser**
+## 🔥 Firebase Setup (Optional)
 
-## 🔥 Firebase Setup
+The portfolio includes optional Firebase integration for visitor counting and contact form submissions.
 
-This project uses Firebase Realtime Database for the visitor counter and contact form. To set up Firebase:
+### Setting up Firebase
 
-1. Create a Firebase project at [https://console.firebase.google.com/](https://console.firebase.google.com/)
-2. Set up a Realtime Database
-3. Configure the database rules using the provided `database-rules.json` file:
+1. **Create a Firebase project**
+   - Go to [Firebase Console](https://console.firebase.google.com/)
+   - Create a new project
+   - Enable Realtime Database
+
+2. **Configure database rules**
+   
+   Use the provided `database-rules.json` file or manually set these rules:
    ```json
    {
      "rules": {
@@ -112,36 +115,49 @@ This project uses Firebase Realtime Database for the visitor counter and contact
      }
    }
    ```
-4. Add your Firebase Realtime Database URL to the `.env.local` file:
+
+3. **Add your database URL**
+   
+   Add your Firebase Realtime Database URL to `.env.local`:
    ```
    NEXT_PUBLIC_FIREBASE_DATABASE_URL=https://your-project-id-default-rtdb.firebaseio.com
    ```
 
-## 📱 Responsive Design
+4. **Deploy database rules** (if using Firebase CLI)
+   ```bash
+   firebase deploy --only database
+   ```
 
-The portfolio is fully responsive and optimized for:
-- Mobile devices (320px+)
-- Tablets (768px+)
-- Laptops/Desktops (1024px+)
-- Large screens (1440px+)
+## 📱 Responsive Breakpoints
 
-## 🌙 Dark Mode
+The portfolio is fully responsive across all device sizes:
 
-Dark mode is implemented using Tailwind CSS and automatically detects the user's system preference. Users can also manually toggle between light and dark mode.
+| Breakpoint | Screen Size | Optimizations |
+|------------|-------------|---------------|
+| Mobile | 320px - 640px | Single column layout, touch-friendly interactions |
+| Tablet | 640px - 1024px | Optimized spacing, medium-sized components |
+| Desktop | 1024px - 1440px | Multi-column layouts, hover effects |
+| Large | 1440px+ | Maximum content width, enhanced spacing |
 
-## 🙏 Acknowledgements
+## 🎯 Key Sections
 
-- [Next.js](https://nextjs.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [Firebase](https://firebase.google.com/)
-- [Vercel](https://vercel.com/)
+- **Hero**: Dynamic introduction with animated typing and visitor counter
+- **About**: Personal background with animated role cards
+- **Skills**: Interactive technology showcase with project counts
+- **Projects**: Featured projects with filtering and detailed overlays
+- **Contact**: Functional form with Firebase integration
 
-## 📧 Contact
+## 📄 License
 
-Feel free to reach out if you have any questions or feedback!
+This project is open source and available under the [MIT License](LICENSE).
 
-- Email: jed@adequatej.com
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/jed-geoghegan)
-- GitHub: [Your GitHub](https://github.com/adequatej)
+## 📧 Contact & Connect
+
+- **Email**: jedgeoghegan@gmail.com
+- **LinkedIn**: [linkedin.com/in/jed-geoghegan](https://linkedin.com/in/jed-geoghegan)
+- **GitHub**: [github.com/adequatej](https://github.com/adequatej)
+
+---
+
+*If you like this project, please consider giving it a ⭐ on GitHub!*
 
