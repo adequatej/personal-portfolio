@@ -537,10 +537,10 @@ export function Skills() {
           {/* Stats Section */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto mt-12 relative z-10">
             {[
-              { value: '3+', label: 'Years of Coding', icon: '⌨️' },
-              { value: '10+', label: 'Projects Completed', icon: '🚀' },
+              { value: '4+', label: 'Years of Coding', icon: '⌨️' },
+              { value: '30+', label: 'Projects Completed', icon: '🚀' },
               { value: '800+', label: 'Github Contributions', icon: '🔧' },
-              { value: '5+', label: 'Applications Deployed', icon: '💼' }
+              { value: '10+', label: 'Applications Deployed', icon: '💼' }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
