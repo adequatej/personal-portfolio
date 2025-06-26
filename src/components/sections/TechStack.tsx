@@ -540,7 +540,7 @@ export function Skills() {
               { value: '4+', label: 'Years of Coding', icon: '⌨️' },
               { value: '30+', label: 'Projects Completed', icon: '🚀' },
               { value: '800+', label: 'Github Contributions', icon: '🔧' },
-              { value: '10+', label: 'Applications Deployed', icon: '💼' }
+              { value: '15+', label: 'Applications Deployed', icon: '💼' }
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
