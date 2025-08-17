@@ -23,9 +23,17 @@ const projects: Project[] = [
     title: 'Huddle Chat',
     description: 'A real-time chat application built with Next.js, React, TypeScript, and MongoDB. Features modern UI with TailwindCSS/ShadCN and seamless user interactions.',
     tags: ['Next.js', 'TypeScript', 'React', 'TailwindCSS', 'Git', 'ShadCN', 'MongoDB', 'Node.js', 'Vercel'],
-    image: 'https://cdn.midjourney.com/414d8fdb-56c4-4c3d-9cd0-2ae948d26f4b/0_3.png',
+    image: 'huddle.png',
     github: 'https://github.com/adequatej/huddle-chat',
     demo: 'https://huddle-chat-pi.vercel.app/'
+  },
+  {
+    title: 'Mapping Flavor',
+    description: 'A fullstack platform for food discovery and cultural identity research in Taiwans Night Markets. Built with Next.js, TypeScript, MapBox, PostgreSQL, and TailwindCSS.',
+    tags: ['Next.js', 'TypeScript', 'MapBox', 'PostgreSQL', 'TailwindCSS', 'Git', 'ShadCN', 'MongoDB', 'Node.js', 'Vercel'],
+    image: 'taiwan.png',
+    github: 'https://github.com/adequatej/mapping-flavor',
+    demo: 'https://mapping-flavor.vercel.app/'
   },
   {
     title: 'Open Tech Garage',
