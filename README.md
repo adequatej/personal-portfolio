@@ -1,6 +1,6 @@
 # Personal Portfolio Website 
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. This portfolio showcases my projects, skills, and professional experience with beautiful animations and real-time features.
+Built with Next.js, TypeScript, and Tailwind CSS. This portfolio showcases my projects, skills, and professional experience with beautiful animations and real-time features. CHECK IT OUT!!!
 
 **Live Demo**: [jedgeoghegan.com](https://jedgeoghegan.com/)
 
