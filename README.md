@@ -1,10 +1,10 @@
-# Personal Portfolio Website ✨
+# Personal Portfolio Website 
 
-A modern, responsive portfolio website built with Next.js, TypeScript, and Tailwind CSS. This portfolio showcases my projects, skills, and professional experience with beautiful animations and real-time features.
+Built with Next.js, TypeScript, and Tailwind CSS. This portfolio showcases my projects, skills, and professional experience with beautiful animations and real-time features. CHECK IT OUT!!!
 
-🌐 **Live Demo**: [jedgeoghegan.com](https://jedgeoghegan.com/)
+**Live Demo**: [jedgeoghegan.com](https://jedgeoghegan.com/)
 
-## 🌟 Features
+## Features
 
 - **Modern UI/UX**: Clean, responsive design with smooth animations powered by Framer Motion
 - **Dark/Light Mode**: Automatic theme detection with manual toggle option using next-themes
@@ -23,7 +23,7 @@ A modern, responsive portfolio website built with Next.js, TypeScript, and Tailw
 - **Responsive Design**: Fully optimized for all device sizes from mobile to desktop
 - **Analytics**: Integrated with Vercel Analytics for performance monitoring
 
-## 🚀 Tech Stack
+## Tech Stack
 
 ### Frontend
 - **Framework**: Next.js 15 with TypeScript
@@ -43,7 +43,7 @@ A modern, responsive portfolio website built with Next.js, TypeScript, and Tailw
 - **Type Checking**: TypeScript 5
 - **Build Tool**: Next.js with Turbopack for faster development
 
-## 🛠️ Setup and Installation
+## Setup and Installation
 
 ### Prerequisites
 - Node.js 18+ 
@@ -87,7 +87,7 @@ A modern, responsive portfolio website built with Next.js, TypeScript, and Tailw
    
    Navigate to [http://localhost:3000](http://localhost:3000) to view the portfolio
 
-## 🔥 Firebase Setup (Optional)
+## Firebase Setup (Optional)
 
 The portfolio includes optional Firebase integration for visitor counting and contact form submissions.
 
@@ -128,7 +128,7 @@ The portfolio includes optional Firebase integration for visitor counting and co
    firebase deploy --only database
    ```
 
-## 📱 Responsive Breakpoints
+## Responsive Breakpoints
 
 The portfolio is fully responsive across all device sizes:
 
@@ -139,7 +139,7 @@ The portfolio is fully responsive across all device sizes:
 | Desktop | 1024px - 1440px | Multi-column layouts, hover effects |
 | Large | 1440px+ | Maximum content width, enhanced spacing |
 
-## 🎯 Key Sections
+## Key Sections
 
 - **Hero**: Dynamic introduction with animated typing and visitor counter
 - **About**: Personal background with animated role cards
@@ -147,17 +147,14 @@ The portfolio is fully responsive across all device sizes:
 - **Projects**: Featured projects with filtering and detailed overlays
 - **Contact**: Functional form with Firebase integration
 
-## 📄 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 📧 Contact & Connect
+## Contact & Connect
 
 - **Email**: jedgeoghegan@gmail.com
 - **LinkedIn**: [linkedin.com/in/jed-geoghegan](https://linkedin.com/in/jed-geoghegan)
 - **GitHub**: [github.com/adequatej](https://github.com/adequatej)
 
 ---
-
-*If you like this project, please consider giving it a ⭐ on GitHub!*
-
