@@ -18,6 +18,7 @@ interface Particle {
 
 interface Props {
   mode: 'static' | 'blackhole';
+  className?: string;
 }
 
 const COLORS = {
@@ -117,7 +118,7 @@ const BLACKHOLE_CONFIG_MOBILE: BlackholeConfig = {
   FADE_SPEED: 0.05
 };
 
-export function ParticleBackground({ mode }: Props) {
+export function ParticleBackground({ mode, className }: Props) {
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -127,13 +128,20 @@ export function ParticleBackground({ mode }: Props) {
   const lastFrameTimeRef = useRef(0);
   const animationFrameRef = useRef<number | null>(null);
   const lastTouchRef = useRef<{ x: number; y: number } | null>(null);
+  const dimensionsRef = useRef({ width: 0, height: 0 });
 
   const createParticles = useCallback((width: number, height: number) => {
     const config = mode === 'static' 
       ? (isMobileRef.current ? STATIC_CONFIG_MOBILE : STATIC_CONFIG)
       : (isMobileRef.current ? BLACKHOLE_CONFIG_MOBILE : BLACKHOLE_CONFIG);
 
-    return Array.from({ length: config.NUM_PARTICLES }, () => ({
+    // Adjust particle count based on area
+    const area = width * height;
+    const baseArea = 1920 * 1080;
+    const scaleFactor = Math.min(1, area / baseArea);
+    const numParticles = Math.floor(config.NUM_PARTICLES * scaleFactor);
+
+    return Array.from({ length: numParticles }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       vx: (Math.random() - 0.5) * 2 * config.PARTICLE_SPEED.MAX,
@@ -382,8 +390,8 @@ export function ParticleBackground({ mode }: Props) {
     const now = performance.now();
     lastFrameTimeRef.current = now;
 
-    const width = canvas.width;
-    const height = canvas.height;
+    const width = dimensionsRef.current.width || canvas.width;
+    const height = dimensionsRef.current.height || canvas.height;
     const colors = COLORS[resolvedTheme as keyof typeof COLORS];
 
     // Clear canvas completely
@@ -566,18 +574,30 @@ export function ParticleBackground({ mode }: Props) {
     if (!canvasRef.current || !mounted) return;
     const canvas = canvasRef.current;
 
-    const handleResize = () => {
+    const handleResize = (entries?: ResizeObserverEntry[]) => {
       const dpr = window.devicePixelRatio || 1;
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      
+      let width, height;
+
+      if (entries && entries[0]) {
+        width = entries[0].contentRect.width;
+        height = entries[0].contentRect.height;
+      } else {
+        width = window.innerWidth;
+        height = window.innerHeight;
+      }
+
       // Update mobile detection
       isMobileRef.current = width <= 768;
       
       canvas.width = width * dpr;
       canvas.height = height * dpr;
+      
+      // We don't set style width/height here if using className, 
+      // but to be safe against default styling issues:
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
+      
+      dimensionsRef.current = { width, height };
       
       const ctx = canvas.getContext('2d');
       if (ctx) {
@@ -585,30 +605,46 @@ export function ParticleBackground({ mode }: Props) {
       }
 
       // Reset particles with appropriate config
-      particlesRef.current = createParticles(canvas.width, canvas.height);
+      particlesRef.current = createParticles(width, height);
     };
 
+    // Use ResizeObserver for more robust sizing
+    const observer = new ResizeObserver((entries) => handleResize(entries));
+    observer.observe(canvas.parentElement || document.body);
+
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current.x = e.clientX;
-      mouseRef.current.y = e.clientY;
+      if (canvasRef.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        mouseRef.current.x = e.clientX - rect.left;
+        mouseRef.current.y = e.clientY - rect.top;
+      } else {
+        mouseRef.current.x = e.clientX;
+        mouseRef.current.y = e.clientY;
+      }
       lastTouchRef.current = null; // Reset touch when using mouse
     };
 
     const handleTouchStart = (e: TouchEvent) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
-        mouseRef.current.x = touch.clientX;
-        mouseRef.current.y = touch.clientY;
-        lastTouchRef.current = { x: touch.clientX, y: touch.clientY };
+        if (canvasRef.current) {
+          const rect = canvasRef.current.getBoundingClientRect();
+          mouseRef.current.x = touch.clientX - rect.left;
+          mouseRef.current.y = touch.clientY - rect.top;
+          lastTouchRef.current = { x: mouseRef.current.x, y: mouseRef.current.y };
+        }
       }
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length > 0) {
         const touch = e.touches[0];
-        mouseRef.current.x = touch.clientX;
-        mouseRef.current.y = touch.clientY;
-        lastTouchRef.current = { x: touch.clientX, y: touch.clientY };
+        if (canvasRef.current) {
+           const rect = canvasRef.current.getBoundingClientRect();
+           mouseRef.current.x = touch.clientX - rect.left;
+           mouseRef.current.y = touch.clientY - rect.top;
+           lastTouchRef.current = { x: mouseRef.current.x, y: mouseRef.current.y };
+        }
       }
     };
 
@@ -617,8 +653,11 @@ export function ParticleBackground({ mode }: Props) {
       const animate = () => {
         if (!lastTouchRef.current) return;
         
-        const dx = window.innerWidth / 2 - lastTouchRef.current.x;
-        const dy = window.innerHeight / 2 - lastTouchRef.current.y;
+        const width = dimensionsRef.current.width;
+        const height = dimensionsRef.current.height;
+        
+        const dx = width / 2 - lastTouchRef.current.x;
+        const dy = height / 2 - lastTouchRef.current.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance < 1) {
@@ -637,22 +676,28 @@ export function ParticleBackground({ mode }: Props) {
       animate();
     };
 
+    // Initial resize
     handleResize();
-    window.addEventListener('resize', handleResize);
+
+    // Event listeners
+    // For mouse/touch, if we want them to work within the specific container, we can attach to the canvas or parent.
+    // Attaching to window ensures we catch movements outside too, but coordinates need offset.
+    // Let's attach to window for consistency but calculate offsets.
+    
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchstart', handleTouchStart);
-    window.addEventListener('touchmove', handleTouchMove);
-    window.addEventListener('touchend', handleTouchEnd);
+    canvas.addEventListener('touchstart', handleTouchStart);
+    canvas.addEventListener('touchmove', handleTouchMove);
+    canvas.addEventListener('touchend', handleTouchEnd);
 
     lastFrameTimeRef.current = performance.now();
     animationFrameRef.current = requestAnimationFrame(draw);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      observer.disconnect();
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
+      canvas.removeEventListener('touchstart', handleTouchStart);
+      canvas.removeEventListener('touchmove', handleTouchMove);
+      canvas.removeEventListener('touchend', handleTouchEnd);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -664,8 +709,8 @@ export function ParticleBackground({ mode }: Props) {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none -z-10"
+      className={className || "fixed inset-0 pointer-events-none -z-10"}
       style={{ opacity: 0.9 }}
     />
   );
-} 
+}

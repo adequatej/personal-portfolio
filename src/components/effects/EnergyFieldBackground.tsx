@@ -36,13 +36,18 @@ const CONFIG = {
   MOUSE_INFLUENCE: 200
 };
 
-export function EnergyFieldBackground() {
+interface Props {
+  className?: string;
+}
+
+export function EnergyFieldBackground({ className }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { resolvedTheme = 'dark' } = useTheme();
   const [mounted, setMounted] = useState(false);
   const linesRef = useRef<Line[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
   const animationFrameRef = useRef<number | undefined>(undefined);
+  const dimensionsRef = useRef({ width: 0, height: 0 });
 
   const createLine = useCallback((width: number, height: number, nearMouse = false): Line => {
     let x1, y1;
@@ -80,8 +85,8 @@ export function EnergyFieldBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const width = canvas.width;
-    const height = canvas.height;
+    const width = dimensionsRef.current.width || canvas.width;
+    const height = dimensionsRef.current.height || canvas.height;
     const colors = COLORS[resolvedTheme as keyof typeof COLORS];
 
     // Clear canvas
@@ -157,12 +162,24 @@ export function EnergyFieldBackground() {
     if (!canvasRef.current || !mounted) return;
     const canvas = canvasRef.current;
 
-    const handleResize = () => {
+    const handleResize = (entries?: ResizeObserverEntry[]) => {
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      let width, height;
+
+      if (entries && entries[0]) {
+        width = entries[0].contentRect.width;
+        height = entries[0].contentRect.height;
+      } else {
+        width = window.innerWidth;
+        height = window.innerHeight;
+      }
+
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      
+      dimensionsRef.current = { width, height };
       
       const ctx = canvas.getContext('2d');
       if (ctx) {
@@ -172,22 +189,29 @@ export function EnergyFieldBackground() {
       // Reset lines
       linesRef.current = Array.from(
         { length: CONFIG.NUM_LINES },
-        () => createLine(canvas.width, canvas.height)
+        () => createLine(width, height)
       );
     };
 
+    const observer = new ResizeObserver((entries) => handleResize(entries));
+    observer.observe(canvas.parentElement || document.body);
+
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+       if (canvasRef.current) {
+         const rect = canvasRef.current.getBoundingClientRect();
+         mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+       } else {
+         mouseRef.current = { x: e.clientX, y: e.clientY };
+       }
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
 
     animationFrameRef.current = requestAnimationFrame(draw);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      observer.disconnect();
       window.removeEventListener('mousemove', handleMouseMove);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
@@ -200,8 +224,8 @@ export function EnergyFieldBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none -z-10"
+      className={className || "fixed inset-0 pointer-events-none -z-10"}
       style={{ opacity: 0.9 }}
     />
   );
-} 
+}

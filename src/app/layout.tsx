@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/providers/theme-provider";
-import { BackgroundSelector } from "@/components/effects/BackgroundSelector";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Analytics } from "@vercel/analytics/react";
@@ -27,7 +26,6 @@ export default function RootLayout({
       <body className={`${geist.variable} font-sans antialiased min-h-screen overflow-x-hidden`}>
         <ThemeProvider>
           <div className="relative flex flex-col min-h-screen w-full">
-            <BackgroundSelector />
             <Navbar />
             <main className="flex-grow pt-16 w-full">
               {children}

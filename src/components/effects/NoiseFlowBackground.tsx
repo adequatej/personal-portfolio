@@ -32,6 +32,10 @@ interface Particle {
   speed: number;
 }
 
+interface Props {
+  className?: string;
+}
+
 // Simplex noise implementation
 class SimplexNoise {
   private grad3: number[][];
@@ -75,7 +79,7 @@ class SimplexNoise {
   }
 }
 
-export function NoiseFlowBackground() {
+export function NoiseFlowBackground({ className }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { resolvedTheme = 'dark' } = useTheme();
   const [mounted, setMounted] = useState(false);
@@ -84,9 +88,16 @@ export function NoiseFlowBackground() {
   const timeRef = useRef(0);
   const mouseRef = useRef({ x: 0, y: 0 });
   const animationFrameRef = useRef<number | undefined>(undefined);
+  const dimensionsRef = useRef({ width: 0, height: 0 });
 
   const createParticles = useCallback((width: number, height: number) => {
-    return Array.from({ length: CONFIG.PARTICLE_COUNT }, () => ({
+    // Adjust particle count based on area
+    const area = width * height;
+    const baseArea = 1920 * 1080;
+    const scaleFactor = Math.min(1, area / baseArea);
+    const numParticles = Math.floor(CONFIG.PARTICLE_COUNT * scaleFactor);
+
+    return Array.from({ length: numParticles }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
       age: Math.random() * CONFIG.PARTICLE_LIFE,
@@ -100,8 +111,8 @@ export function NoiseFlowBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const width = canvas.width;
-    const height = canvas.height;
+    const width = dimensionsRef.current.width || canvas.width;
+    const height = dimensionsRef.current.height || canvas.height;
     const colors = COLORS[resolvedTheme as keyof typeof COLORS];
 
     // Apply fade effect
@@ -185,33 +196,52 @@ export function NoiseFlowBackground() {
     if (!canvasRef.current || !mounted) return;
     const canvas = canvasRef.current;
 
-    const handleResize = () => {
+    const handleResize = (entries?: ResizeObserverEntry[]) => {
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      let width, height;
+
+      if (entries && entries[0]) {
+        width = entries[0].contentRect.width;
+        height = entries[0].contentRect.height;
+      } else {
+        width = window.innerWidth;
+        height = window.innerHeight;
+      }
+      
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      
+      dimensionsRef.current = { width, height };
       
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.scale(dpr, dpr);
       }
 
-      particlesRef.current = createParticles(canvas.width, canvas.height);
+      particlesRef.current = createParticles(width, height);
     };
 
+    const observer = new ResizeObserver((entries) => handleResize(entries));
+    observer.observe(canvas.parentElement || document.body);
+
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+      if (canvasRef.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      } else {
+        mouseRef.current = { x: e.clientX, y: e.clientY };
+      }
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
 
     animationFrameRef.current = requestAnimationFrame(draw);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      observer.disconnect();
       window.removeEventListener('mousemove', handleMouseMove);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
@@ -224,8 +254,8 @@ export function NoiseFlowBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none -z-10"
+      className={className || "fixed inset-0 pointer-events-none -z-10"}
       style={{ opacity: 0.9 }}
     />
   );
-} 
+}

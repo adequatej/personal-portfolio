@@ -36,13 +36,18 @@ const MAX_LENGTH = 15;
 const MIN_UPDATE_INTERVAL = 50;
 const MAX_UPDATE_INTERVAL = 150;
 
-export function MatrixBackground() {
+interface Props {
+  className?: string;
+}
+
+export function MatrixBackground({ className }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { resolvedTheme = 'dark' } = useTheme();
   const [mounted, setMounted] = useState(false);
   const dropsRef = useRef<Drop[]>([]);
   const mouseRef = useRef({ x: 0, y: 0 });
   const animationFrameRef = useRef<number | undefined>(undefined);
+  const dimensionsRef = useRef({ width: 0, height: 0 });
 
   const createDrop = useCallback((x?: number) => {
     const canvas = canvasRef.current;
@@ -53,8 +58,10 @@ export function MatrixBackground() {
       CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)]
     );
 
+    const width = dimensionsRef.current.width || canvas.width;
+
     return {
-      x: x ?? Math.floor(Math.random() * (canvas.width / FONT_SIZE)) * FONT_SIZE,
+      x: x ?? Math.floor(Math.random() * (width / FONT_SIZE)) * FONT_SIZE,
       y: 0,
       speed: Math.random() * (MAX_SPEED - MIN_SPEED) + MIN_SPEED,
       length,
@@ -70,6 +77,8 @@ export function MatrixBackground() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const width = dimensionsRef.current.width || canvas.width;
+    const height = dimensionsRef.current.height || canvas.height;
     const colors = COLORS[resolvedTheme as keyof typeof COLORS];
     const now = performance.now();
 
@@ -77,7 +86,7 @@ export function MatrixBackground() {
     ctx.fillStyle = resolvedTheme === 'dark' 
       ? 'rgba(0, 0, 0, 0.1)' 
       : 'rgba(255, 255, 255, 0.1)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillRect(0, 0, width, height);
 
     // Add new drops randomly
     if (Math.random() < DROP_CHANCE) {
@@ -133,7 +142,7 @@ export function MatrixBackground() {
       drop.y += drop.speed;
 
       // Remove if off screen
-      return drop.y - drop.length * FONT_SIZE < canvas.height;
+      return drop.y - drop.length * FONT_SIZE < height;
     });
 
     animationFrameRef.current = requestAnimationFrame(draw);
@@ -147,13 +156,25 @@ export function MatrixBackground() {
     if (!canvasRef.current || !mounted) return;
     const canvas = canvasRef.current;
 
-    const handleResize = () => {
+    const handleResize = (entries?: ResizeObserverEntry[]) => {
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
+      let width, height;
+
+      if (entries && entries[0]) {
+        width = entries[0].contentRect.width;
+        height = entries[0].contentRect.height;
+      } else {
+        width = window.innerWidth;
+        height = window.innerHeight;
+      }
       
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      
+      dimensionsRef.current = { width, height };
+
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.scale(dpr, dpr);
@@ -163,18 +184,25 @@ export function MatrixBackground() {
       dropsRef.current = [];
     };
 
+    const observer = new ResizeObserver((entries) => handleResize(entries));
+    observer.observe(canvas.parentElement || document.body);
+
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY };
+      if (canvasRef.current) {
+        const rect = canvasRef.current.getBoundingClientRect();
+        mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+      } else {
+        mouseRef.current = { x: e.clientX, y: e.clientY };
+      }
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
     window.addEventListener('mousemove', handleMouseMove);
 
     animationFrameRef.current = requestAnimationFrame(draw);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      observer.disconnect();
       window.removeEventListener('mousemove', handleMouseMove);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
@@ -187,8 +215,8 @@ export function MatrixBackground() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none -z-10"
+      className={className || "fixed inset-0 pointer-events-none -z-10"}
       style={{ opacity: 0.9 }}
     />
   );
-} 
+}
