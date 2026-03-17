@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/lib/providers/theme-provider";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Analytics } from "@vercel/analytics/react";
+import { CustomCursor } from "@/components/layout/CustomCursor";
 
 const geist = Geist({
   subsets: ["latin"],
   variable: "--font-geist",
 });
 
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+});
+
 export const metadata: Metadata = {
-  title: "Jed Geoghegan | Portfolio",
-  description: "Front-end Engineer, Software Engineer, and Full-Stack Developer",
+  title: "Jed Geoghegan",
+  description: "Software Engineer — full-stack development, AI/ML, and building things that matter.",
 };
 
 export default function RootLayout({
@@ -23,14 +29,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geist.variable} font-sans antialiased min-h-screen overflow-x-hidden`}>
+      <body className={`${geist.variable} ${geistMono.variable} font-sans antialiased min-h-screen`}>
         <ThemeProvider>
-          <div className="relative flex flex-col min-h-screen w-full">
+          <div className="flex flex-col min-h-screen">
             <Navbar />
-            <main className="flex-grow pt-16 w-full">
+            <main className="flex-grow pt-14">
               {children}
             </main>
             <Footer />
+            <CustomCursor />
             <Analytics />
           </div>
         </ThemeProvider>
