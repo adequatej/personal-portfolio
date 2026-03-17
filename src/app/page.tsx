@@ -5,6 +5,8 @@ import { Container } from '@/components/layout/Container';
 import { incrementVisitorCount, subscribeToVisitorCount, subscribeToWritingPosts, WritingPost } from '@/lib/firebase';
 import { GitHubActivity } from '@/components/github/GitHubActivity';
 import { samplePosts } from '@/lib/sample-posts';
+import BlurText from '@/components/effects/BlurText';
+import BorderGlow from '@/components/effects/BorderGlow';
 import Link from 'next/link';
 
 const featuredProjects = [
@@ -245,12 +247,20 @@ export default function Home() {
       <Container className="py-16 md:py-24 max-w-3xl">
         {/* Intro */}
         <section className="mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-1">
-            Jed Geoghegan
-          </h1>
-          <p className="text-sm md:text-base font-mono text-muted-foreground mb-3">
-            Incoming Applied AI SWE Intern @ Genmab
-          </p>
+          <BlurText
+            text="Jed Geoghegan"
+            className="text-3xl md:text-4xl font-bold tracking-tight mb-1"
+            delay={75}
+            animateBy="words"
+            direction="top"
+          />
+          <BlurText
+            text="Incoming Applied AI SWE Intern @ Genmab"
+            className="text-sm md:text-base font-mono text-muted-foreground mb-3"
+            delay={60}
+            animateBy="words"
+            direction="top"
+          />
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-mono text-muted-foreground/60 tabular-nums mb-4">
             {currentTime && <span>{currentTime}</span>}
             {lastUpdated && (
@@ -340,10 +350,21 @@ export default function Home() {
           <h2 className="text-lg font-semibold mb-5">Currently Exploring</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {interests.map((item) => (
-              <div key={item.label} className="border border-border/50 rounded-md px-3 py-2.5">
-                <p className="text-sm font-medium mb-0.5">{item.label}</p>
-                <p className="text-xs text-muted-foreground/60">{item.detail}</p>
-              </div>
+              <BorderGlow
+                key={item.label}
+                borderRadius={8}
+                glowRadius={15}
+                glowIntensity={0.4}
+                edgeSensitivity={40}
+                glowColor="217 91 60"
+                colors={['#3b82f6', '#6366f1', '#8b5cf6']}
+                fillOpacity={0.2}
+              >
+                <div className="border border-border/50 rounded-lg px-3 py-2.5">
+                  <p className="text-sm font-medium mb-0.5">{item.label}</p>
+                  <p className="text-xs text-muted-foreground/60">{item.detail}</p>
+                </div>
+              </BorderGlow>
             ))}
           </div>
         </section>

@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import { CustomCursor } from "@/components/layout/CustomCursor";
+import ClickSpark from "@/components/effects/ClickSpark";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -31,15 +32,17 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geist.variable} ${geistMono.variable} font-sans antialiased min-h-screen`}>
         <ThemeProvider>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-grow pt-14">
-              {children}
-            </main>
-            <Footer />
-            <CustomCursor />
-            <Analytics />
-          </div>
+          <ClickSpark sparkColor="#6366f1" sparkSize={10} sparkRadius={15} sparkCount={8} duration={400}>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-grow pt-14">
+                {children}
+              </main>
+              <Footer />
+              <CustomCursor />
+              <Analytics />
+            </div>
+          </ClickSpark>
         </ThemeProvider>
       </body>
     </html>
