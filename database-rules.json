@@ -2,11 +2,11 @@
   "rules": {
     "visitorCount": {
       ".read": true,
-      ".write": true
+      ".write": "newData.val() > data.val() || !data.exists()"
     },
     "contactMessages": {
       ".read": false,
       ".write": true
     }
   }
-} 
+}

@@ -8,6 +8,8 @@
 !.yarn/releases
 !.yarn/versions
 
+NEW_COMPONENT_CODE.md
+
 # testing
 /coverage
 
